@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import heroImage from './assets/hero.png'
 import './App.css'
 
-const API_BASE_URL = "";
+const API_BASE_URL = "https://protoflio-cse7.onrender.com";
 
 function App() {
   const [data, setData] = useState(null)

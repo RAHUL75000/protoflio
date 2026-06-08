@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Admin.css';
 
-const API_BASE_URL = "";
+const API_BASE_URL = "https://protoflio-cse7.onrender.com";
 const ADMIN_TOKEN_KEY = 'rahul_admin_token';
 
 function Admin() {
