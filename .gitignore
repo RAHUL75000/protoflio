@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Node
+node_modules/
+dist/
+build/
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,199 @@
+{
+  "about": {
+    "copy": "Passionate Full-Stack Developer and Computer Science student focused on building modern, scalable, and user-friendly digital experiences. I enjoy transforming ideas into impactful web applications by combining clean design, efficient backend systems, and AI-powered solutions. From hackathons to real-world projects, I strive to create products that solve meaningful problems while delivering seamless user experiences.",
+    "expertise": [
+      "Full-Stack Web Development",
+      "React & Modern Frontend Development",
+      "REST API & Database Integration",
+      "AI-Powered Applications",
+      "Responsive & Mobile-First Design",
+      "Problem Solving & Innovation"
+    ],
+    "kicker": "About Rahul",
+    "title": "Building intelligent applications that combine great design with powerful technology."
+  },
+  "footer": {
+    "email": "rc178217@gmail.com",
+    "kicker": "Let us build something useful",
+    "socials": [
+      {
+        "label": "GitHub",
+        "link": "https://github.com/RAHUL75000"
+      },
+      {
+        "label": "LinkedIn",
+        "link": "https://www.linkedin.com/in/rahul-kumar-aa440a27b/"
+      },
+      {
+        "label": "Twitter",
+        "link": "https://x.com/rc178217"
+      },
+      {
+        "label": "Instagram",
+        "link": "https://www.instagram.com/chauhan__rahuul/"
+      },
+      {
+        "label": "Leetcode",
+        "link": "https://leetcode.com/u/Rahul_chauhan_coder/"
+      }
+    ],
+    "title": "Have a portfolio, business site, or web app in mind?",
+    "whatsapp": "+917500099185"
+  },
+  "general": {
+    "intro": "Rahul is arriving...",
+    "logo": "Rahul"
+  },
+  "hero": {
+    "copy": "I help turn ideas into fast, elegant digital products using React, Flask, clean interfaces, and practical engineering decisions.",
+    "eyebrow": "Full Stack  developer",
+    "primaryBtn": "View work",
+    "secondaryBtn": "Start a project",
+    "title": "Professional portfolio websites and web apps built with clarity."
+  },
+  "metrics": [
+    {
+      "label": "Projects delivered",
+      "value": "6+"
+    },
+    {
+      "label": "Years learning and building",
+      "value": "1+"
+    },
+    {
+      "label": "Focus on clean UX",
+      "value": "100%"
+    }
+  ],
+  "process": [
+    {
+      "text": "Deep dive into requirements, defining user personas, and selecting the most efficient tech stack for the project.",
+      "title": "Analyze & Plan"
+    },
+    {
+      "text": "Crafting intuitive user interfaces and experiences through wireframes and interactive prototypes.",
+      "title": "Design & UI/UX"
+    },
+    {
+      "text": "Writing clean, scalable, and maintainable code using React, Node.js, or other modern technologies.",
+      "title": "Development"
+    },
+    {
+      "text": "Ensuring reliability through unit testing, cross-browser compatibility checks, and performance auditing.",
+      "title": "Test & Debug"
+    },
+    {
+      "text": "Launching the project to production environments and optimizing for speed, SEO, and accessibility.",
+      "title": "Deploy & Launch"
+    }
+  ],
+  "processHeader": {
+    "kicker": "My Workflow",
+    "title": "A systematic approach to turning complex ideas into high-performance realities."
+  },
+  "hackathons": [
+    {
+      "title": "HackShastra IPEC",
+      "year": "2025",
+      "role": "Full Stack Lead And Machine learning model",
+      "description": "Participated in the Offline Grand Finale (Round 3) of HackShastra SnowHackIPEC as a member of Team SlumSense. Collaborated on innovative problem-solving, project development, and technical presentations in a competitive hackathon environment.",
+      "achievement": "Grand Finalist",
+      "certificate": "/snowhack.pdf"
+    },
+    {
+      "title": "NASA Space App Challenge 2025",
+      "year": "2025",
+      "role": "Frontend Developer And API",
+      "description": "Participated in NASA Space Apps Challenge 2025 (Jabalpur Edition), collaborating in a team-based hackathon to design innovative technology solutions and strengthen problem-solving, research, and project development skills.",
+      "achievement": "TOP 10",
+      "certificate": "/nasa.pdf"
+    },
+    {
+      "title": "DATA Verse KIET",
+      "year": "2025",
+      "role": "Full Stack Lead And Machine learning model",
+      "description": "Participated in DataVerse at KIET Group of Institutions, working in Team Pulse Protector to develop data-centric solutions, strengthen analytical skills, and collaborate effectively in a competitive innovation event.",
+      "achievement": "Top Performer",
+      "certificate": "/kiet.pdf"
+    }
+  ],
+  "hackathonHeader": {
+    "kicker": "Competitions",
+    "title": "Hackathons & Challenges"
+  },
+  "projects": [
+    {
+      "accent": "AI Research Platform",
+      "description": "A RAG-powered legal research platform for exploring Indian laws, constitutional rights, and government regulations with AI-powered search and citations.",
+      "fullDescription": "Legislative AI of India is an intelligent legal research platform that leverages Retrieval-Augmented Generation (RAG) to provide accurate, citation-backed answers from official Indian legislative documents. Designed for lawyers, students, and citizens, it enables semantic search across laws, constitutional provisions, and government regulations using natural language queries. The platform supports multilingual interactions, context compression for optimized AI responses, PDF export functionality, and a fully responsive user interface. Built with React, TypeScript, Flask, and advanced AI models including Google Gemini and Groq, it delivers a fast, reliable, and user-friendly legal research experience.",
+      "id": 1,
+      "link": "https://legislative-ai-of-india-chatbot.vercel.app/",
+      "tech": [
+        "React 18", "TypeScript", "Flask", "Python", "Tailwind CSS", "Vite", "Google Gemini", "Groq", "RAG", "TF-IDF Vector Store", "NumPy", "Pandas", "Scale Down API"
+      ],
+      "title": "Legislative AI of India"
+    },
+    {
+      "accent": "Smart Urban Development Solution",
+      "description": "An AI-powered platform designed to identify, analyze, and address challenges in slum communities through data-driven insights and smart urban planning.",
+      "fullDescription": "SlumSense is an innovative smart-city solution developed to improve living conditions in underserved urban communities. The platform leverages data analytics, mapping technologies, and AI-driven insights to identify infrastructure gaps, sanitation issues, resource shortages, and other critical challenges faced by slum residents. By providing actionable recommendations and visualized data, SlumSense helps policymakers, NGOs, and local authorities make informed decisions for sustainable urban development. The project was showcased during the HackShastra SnowHackIPEC Grand Finale, demonstrating problem-solving, teamwork, and technology-driven social impact.",
+      "id": 2,
+      "link": "https://github.com/RAHUL75000/slumSense",
+      "tech": [
+        "React", "Flask", "Python", "JavaScript", "HTML", "CSS", "AI/ML", "Data Analytics", "GIS Mapping", "REST API"
+      ],
+      "title": "SlumSense"
+    },
+    {
+      "accent": "Climate Intelligence Platform",
+      "description": "A weather-risk prediction platform that helps users plan trips by analyzing climate conditions and forecasting environmental risks for any location and date.",
+      "fullDescription": "AtmosAPI is a climate intelligence platform designed to help travelers, adventurers, and outdoor enthusiasts make informed decisions before their journeys. By leveraging Earth-observation data and historical climate datasets, the platform predicts the likelihood of extreme weather conditions, including excessive heat, cold, wind, rainfall, and overall discomfort. Users can simply enter a location and date to receive detailed risk assessments, visual indicators, and actionable insights. With its responsive interface, global coverage, and fast data processing, AtmosAPI provides a reliable way to plan adventures with confidence while minimizing weather-related uncertainties.",
+      "id": 3,
+      "link": "https://github.com/RAHUL75000/AtmosAPI",
+      "tech": [
+       "React", "JavaScript", "HTML", "CSS", "Weather API", "Climate Data Analytics", "Earth Observation Data", "REST API", "Flask", "Python", "Data Visualization"
+      ],
+      "title": "AtmosAPI"
+    }
+  ],
+  "projectsHeader": {
+    "kicker": "Selected work",
+    "title": "Projects with clean interfaces and practical full-stack foundations."
+  },
+  "resume": {
+    "education": [
+      {
+        "degree": "class 10",
+        "institution": "St mary convent sr. sec school Amroha",
+        "marks": "70 %",
+        "year": "2021-22"
+      },
+      {
+        "degree": "class 12",
+        "institution": "St mary convent sr. sec school Amroha",
+        "marks": "78 %",
+        "year": "2022-23"
+      },
+      {
+        "degree": "B.TECH COMPUTER SCIENCE",
+        "institution": "IMS ENGINEERING COLLEGE GHAZIABAD",
+        "marks": "7.84 cgpa",
+        "year": "2023-present"
+      }
+    ],
+    "experience": [
+      {
+        "company": "Independent Development",
+        "description": "Architecting and building end-to-end web applications for various personal and freelance projects. Focused on mastering the full-stack lifecycle—from UI design in React to backend logic in Flask. Actively seeking a challenging internship to contribute to professional teams and real-world products.",
+        "role": "Aspiring Full Stack Developer",
+        "year": "2023 - Present"
+      }
+    ],
+    "header": {
+      "cvLink": "/Rahul_kumar_cv.pdf",
+      "kicker": "Resume",
+      "title": "Experience and Education",
+      "viewLink": "/Rahul_kumar_cv.pdf"
+    }
+  }
+}
