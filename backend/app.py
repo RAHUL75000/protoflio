@@ -1,13 +1,18 @@
 import json
 import os
 import time
+import mimetypes
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
+# Ensure mimetypes are correctly recognized
+mimetypes.add_type('text/css', '.css')
+mimetypes.add_type('application/javascript', '.js')
+
 app = Flask(__name__)
-# Enable CORS for API routes
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+# Enable CORS for all routes to prevent issues with module scripts
+CORS(app)
 
 # Configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -38,7 +43,10 @@ def load_data():
     if not os.path.exists(DATA_FILE):
         return {}
     with open(DATA_FILE, 'r') as f:
-        return json.load(f)
+        try:
+            return json.load(f)
+        except:
+            return {}
 
 def save_data(data):
     with open(DATA_FILE, 'w') as f:
@@ -138,10 +146,20 @@ def serve_upload(filename):
 
 # Production Static Serving
 
-# Admin assets (using Vite's base: '/admin/')
+# Helper to serve static files with correct mimetype
+def serve_static_file(directory, path):
+    response = send_from_directory(directory, path)
+    # Ensure CSS and JS have correct MIME types
+    if path.endswith('.css'):
+        response.headers['Content-Type'] = 'text/css'
+    elif path.endswith('.js'):
+        response.headers['Content-Type'] = 'application/javascript'
+    return response
+
+# Admin assets
 @app.route('/admin/assets/<path:path>')
 def serve_admin_assets(path):
-    return send_from_directory(os.path.join(ADMIN_DIST, 'assets'), path)
+    return serve_static_file(os.path.join(ADMIN_DIST, 'assets'), path)
 
 @app.route('/admin', defaults={'path': ''})
 @app.route('/admin/<path:path>')
@@ -149,14 +167,14 @@ def serve_admin(path):
     # Check if file exists in admin dist
     full_path = os.path.join(ADMIN_DIST, path)
     if path != "" and os.path.exists(full_path) and not os.path.isdir(full_path):
-        return send_from_directory(ADMIN_DIST, path)
+        return serve_static_file(ADMIN_DIST, path)
     # SPA Fallback for admin
     return send_from_directory(ADMIN_DIST, 'index.html')
 
 # Frontend assets
 @app.route('/assets/<path:path>')
 def serve_frontend_assets(path):
-    return send_from_directory(os.path.join(FRONTEND_DIST, 'assets'), path)
+    return serve_static_file(os.path.join(FRONTEND_DIST, 'assets'), path)
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -164,10 +182,10 @@ def serve_frontend(path):
     # Check if file exists in frontend dist
     full_path = os.path.join(FRONTEND_DIST, path)
     if path != "" and os.path.exists(full_path) and not os.path.isdir(full_path):
-        return send_from_directory(FRONTEND_DIST, path)
+        return serve_static_file(FRONTEND_DIST, path)
     
     # Prevent index.html fallback for missing assets or API calls
-    if path.startswith('api/') or path.startswith('assets/') or path.endswith(('.js', '.css', '.png', '.jpg', '.svg')):
+    if path.startswith('api/') or path.startswith('assets/') or path.endswith(('.js', '.css', '.png', '.jpg', '.svg', '.pdf')):
         return "Not Found", 404
         
     # SPA Fallback for frontend
