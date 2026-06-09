@@ -536,12 +536,16 @@ main {
   font-size: clamp(2rem, 4vw, 3.5rem);
 }
 
-.about-section {
-  display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
-  gap: clamp(28px, 6vw, 74px);
-  align-items: start;
+.about-actions {
+  margin-top: 24px;
 }
+
+.view-photo-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
 
 .about-copy p {
   margin: 0;

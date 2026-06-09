@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import heroImage from './assets/hero.png'
+import rahulpfoto from './assets/rahulphoto.png'
 import './App.css'
 
 const API_BASE_URL = "https://protoflio-cse7.onrender.com";
@@ -183,6 +184,11 @@ function App() {
             <div>
               <p className="section-kicker">{data.about.kicker}</p>
               <h2>{data.about.title}</h2>
+              <div className="about-actions">
+                <a href={rahulpfoto} target="_blank" rel="noopener noreferrer" className="button secondary view-photo-btn">
+                  View Photo
+                </a>
+              </div>
             </div>
             <div className="about-copy">
               <p>{data.about.copy}</p>
@@ -373,7 +379,17 @@ function App() {
                   <span className="method-label">WhatsApp</span>
                   <span className="method-value">{data.footer.whatsapp}</span>
                 </a>
-                <a className="contact-method-item" href={`mailto:${data.footer.email}`}>
+                <a className="contact-method-item" href={`googlegmail:///co?to=${data.footer.email}`} onClick={(e) => {
+                  e.preventDefault();
+                  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${data.footer.email}`;
+                  const iosGmail = `googlegmail:///co?to=${data.footer.email}`;
+                  
+                  // Try to open Gmail app on iOS/Android, fallback to web
+                  window.location.href = iosGmail;
+                  setTimeout(() => {
+                    window.open(gmailUrl, '_blank');
+                  }, 500);
+                }}>
                   <span className="method-label">Email</span>
                   <span className="method-value">{data.footer.email}</span>
                 </a>
