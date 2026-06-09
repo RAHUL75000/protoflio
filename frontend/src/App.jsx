@@ -29,10 +29,6 @@ function App() {
     }
   }, [theme])
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light')
-  }
-
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/data`)
       .then((response) => response.json())
@@ -52,26 +48,8 @@ function App() {
     return () => clearTimeout(timer)
   }, [])
 
-  if (showIntro) {
-    return (
-      <div className="intro-screen">
-        <div className="intro-content">
-          <h1 className="intro-logo">{data?.general?.logo || 'RAHUL'}</h1>
-          <div className="intro-loader">
-            <div className="loader-bar"></div>
-          </div>
-          <p className="intro-text">{data?.general?.intro || 'Designing Digital Experiences...'}</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (loading || !data) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-      </div>
-    )
+  const toggleTheme = () => {
+    setTheme((prev) => prev === 'light' ? 'dark' : 'light')
   }
 
   const scrollToSection = (id) => {
@@ -82,17 +60,23 @@ function App() {
     }
   }
 
+  const handleNavClick = (event, id) => {
+    event.preventDefault()
+    scrollToSection(id)
+  }
+
   const handleContactSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
     const payload = Object.fromEntries(formData.entries())
-    
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
+
       if (res.ok) {
         alert('Message sent successfully!')
         e.target.reset()
@@ -102,210 +86,272 @@ function App() {
     }
   }
 
+  if (showIntro) {
+    return (
+      <div className="intro-container">
+        <div className="road">
+          <div className="car-container">
+            <svg className="real-car" viewBox="0 0 120 45" role="img" aria-label="Loading">
+              <path d="M18 29h84l-8-16H39L28 6H14L8 19v10h10Z" fill="var(--accent)" />
+              <circle className="wheel-svg" cx="28" cy="34" r="7" fill="var(--ink)" />
+              <circle className="wheel-svg" cx="88" cy="34" r="7" fill="var(--ink)" />
+              <path d="M44 14h20v10H35l9-10Zm24 0h20l5 10H68V14Z" fill="var(--surface)" />
+            </svg>
+          </div>
+        </div>
+        <p className="intro-text">{data?.general?.intro || 'Designing Digital Experiences...'}</p>
+      </div>
+    )
+  }
+
+  if (loading || !data) {
+    return (
+      <div className="intro-container">
+        <p className="intro-text">Loading...</p>
+      </div>
+    )
+  }
+
   return (
-    <div className={`app ${theme}-theme`}>
-      {/* Navigation */}
+    <div className={`portfolio fade-in ${theme}-theme`}>
+      <div className="bg-blobs" aria-hidden="true">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+      </div>
+
       <nav className="navbar">
-        <div className="nav-container">
-          <div className="logo" onClick={() => scrollToSection('hero')}>{data.general.logo}</div>
-          
+        <div className="navbar-container">
+          <a href="#hero" className="nav-logo" onClick={(event) => handleNavClick(event, 'hero')}>
+            {data.general.logo}
+          </a>
+
           <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-            <button onClick={() => scrollToSection('about')}>About</button>
-            <button onClick={() => scrollToSection('projects')}>Projects</button>
-            <button onClick={() => scrollToSection('experience')}>Experience</button>
-            <button onClick={() => scrollToSection('contact')}>Contact</button>
+            <a href="#about" onClick={(event) => handleNavClick(event, 'about')}>About</a>
+            <a href="#projects" onClick={(event) => handleNavClick(event, 'projects')}>Projects</a>
+            <a href="#experience" onClick={(event) => handleNavClick(event, 'experience')}>Experience</a>
+            <a href="#contact" onClick={(event) => handleNavClick(event, 'contact')}>Contact</a>
             <button className="theme-toggle" onClick={toggleTheme}>
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
           </div>
 
-          <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <div className={`hamburger ${isMenuOpen ? 'open' : ''}`}></div>
+          <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
         </div>
       </nav>
 
       <main>
-        {/* Hero Section */}
         <section id="hero" className="hero">
           <div className="hero-content">
-            <span className="eyebrow">{data.hero.eyebrow}</span>
-            <h1 className="title">{data.hero.title}</h1>
-            <p className="copy">{data.hero.copy}</p>
-            <div className="hero-btns">
-              <button className="btn-primary" onClick={() => scrollToSection('projects')}>{data.hero.primaryBtn}</button>
-              <button className="btn-secondary" onClick={() => scrollToSection('contact')}>{data.hero.secondaryBtn}</button>
+            <p className="eyebrow">{data.hero.eyebrow}</p>
+            <h1>{data.hero.title}</h1>
+            <p className="hero-copy">{data.hero.copy}</p>
+            <div className="hero-actions">
+              <button className="button primary" onClick={() => scrollToSection('projects')}>
+                {data.hero.primaryBtn}
+              </button>
+              <button className="button secondary" onClick={() => scrollToSection('contact')}>
+                {data.hero.secondaryBtn}
+              </button>
             </div>
           </div>
-          <div className="hero-image">
-            <div className="image-wrapper">
-              <img src={heroImage} alt="Rahul Kumar" />
-              <div className="image-bg-blob"></div>
+
+          <div className="hero-media">
+            <img src={heroImage} alt="Rahul Kumar" />
+            <div className="availability">
+              <span className="status-dot"></span>
+              Available for work
             </div>
           </div>
         </section>
 
-        {/* Metrics Bar */}
-        <div className="metrics-bar">
+        <div className="metrics-grid reveal-on-scroll visible">
           {data.metrics.map((metric, index) => (
-            <div key={index} className="metric-item">
-              <h3>{metric.value}</h3>
-              <p>{metric.label}</p>
+            <div key={index} className="metric">
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
             </div>
           ))}
         </div>
 
-        {/* About Section */}
-        <section id="about" className="about">
-          <div className="section-header">
-            <span className="kicker">{data.about.kicker}</span>
-            <h2 className="section-title">{data.about.title}</h2>
-          </div>
-          <div className="about-grid">
-            <div className="about-text">
+        <section id="about" className="section reveal-on-scroll visible">
+          <div className="about-section">
+            <div>
+              <p className="section-kicker">{data.about.kicker}</p>
+              <h2>{data.about.title}</h2>
+            </div>
+            <div className="about-copy">
               <p>{data.about.copy}</p>
               <div className="expertise-list">
                 {data.about.expertise.map((skill, index) => (
-                  <span key={index} className="skill-tag">{skill}</span>
+                  <span key={index}>{skill}</span>
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Projects Section */}
-        <section id="projects" className="projects">
-          <div className="section-header centered">
-            <span className="kicker">{data.projectsHeader.kicker}</span>
-            <h2 className="section-title">{data.projectsHeader.title}</h2>
+        <section id="projects" className="section reveal-on-scroll visible">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">{data.projectsHeader.kicker}</p>
+              <h2>{data.projectsHeader.title}</h2>
+            </div>
           </div>
-          <div className="projects-grid">
+
+          <div className="project-grid">
             {data.projects.map((project, index) => (
-              <div key={index} className="project-card" onClick={() => setSelectedProject(project)}>
-                <div className="project-info">
-                  <span className="project-accent">{project.accent}</span>
+              <div key={project.id || project.title} className="project-card" onClick={() => setSelectedProject(project)}>
+                <div className="project-spotlight"></div>
+                <div className="project-preview">
+                  <div className="preview-window">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div className="preview-grid">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+
+                <div className="project-meta">
+                  <span className="project-type">{project.accent}</span>
+                  <span className="project-number">0{index + 1}</span>
+                </div>
+
+                <div className="project-body">
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <div className="project-tech">
-                    {project.tech.map((t, i) => <span key={i}>{t}</span>)}
+                  <div className="tech-stack">
+                    {project.tech.map((tech) => (
+                      <span key={tech}>{tech}</span>
+                    ))}
                   </div>
+                </div>
+
+                <div className="project-link">
+                  <span>View details</span>
+                  <span>+</span>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Project Modal */}
         {selectedProject && (
           <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-content" onClick={(event) => event.stopPropagation()}>
               <button className="modal-close" onClick={() => setSelectedProject(null)}>&times;</button>
-              <div className="modal-header">
-                <span className="project-accent">{selectedProject.accent}</span>
-                <h2>{selectedProject.title}</h2>
-              </div>
               <div className="modal-body">
-                <p className="full-desc">{selectedProject.fullDescription}</p>
+                <span className="project-type">{selectedProject.accent}</span>
+                <h2>{selectedProject.title}</h2>
+                <p className="modal-description">{selectedProject.fullDescription}</p>
                 <div className="modal-tech">
-                  <h4>Technologies Used</h4>
-                  <div className="tech-tags">
-                    {selectedProject.tech.map((t, i) => <span key={i}>{t}</span>)}
-                  </div>
+                  {selectedProject.tech.map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
                 </div>
-                {selectedProject.link !== "#" && (
-                  <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="project-link-btn">
-                    View Project <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-                  </a>
-                )}
+                <div className="modal-actions">
+                  {selectedProject.link !== "#" && (
+                    <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="button primary">
+                      View Project
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Hackathons Section */}
-        <section className="hackathons">
-          <div className="section-header">
-            <span className="kicker">{data.hackathonHeader.kicker}</span>
-            <h2 className="section-title">{data.hackathonHeader.title}</h2>
+        <section className="section reveal-on-scroll visible">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">{data.hackathonHeader.kicker}</p>
+              <h2>{data.hackathonHeader.title}</h2>
+            </div>
           </div>
-          <div className="hackathon-timeline">
-            {data.hackathons.map((hack, index) => (
-              <div key={index} className="hack-item">
-                <div className="hack-year">{hack.year}</div>
-                <div className="hack-content">
-                  <div className="hack-header">
-                    <h3>{hack.title}</h3>
-                    <span className="achievement">{hack.achievement}</span>
-                  </div>
-                  <p className="role">{hack.role}</p>
-                  <p className="desc">{hack.description}</p>
-                  {hack.certificate && hack.certificate !== "#" && (
-                    <a href={hack.certificate} target="_blank" rel="noopener noreferrer" className="cert-link">View Certificate</a>
-                  )}
-                </div>
+
+          <div className="hackathon-grid">
+            {data.hackathons.map((hack) => (
+              <div key={hack.title} className="hackathon-card">
+                <div className="hackathon-badge">{hack.achievement}</div>
+                <span className="hackathon-year">{hack.year}</span>
+                <h3>{hack.title}</h3>
+                <div className="hackathon-role">{hack.role}</div>
+                <p>{hack.description}</p>
+                {hack.certificate && hack.certificate !== "#" && (
+                  <a href={hack.certificate} target="_blank" rel="noopener noreferrer" className="hack-cert-link">
+                    View Certificate <span>+</span>
+                  </a>
+                )}
               </div>
             ))}
           </div>
         </section>
 
-        {/* Resume Section */}
-        <section id="experience" className="resume">
-          <div className="resume-container">
-            <div className="resume-header">
-              <div className="header-text">
-                <span className="kicker">{data.resume.header.kicker}</span>
-                <h2 className="section-title">{data.resume.header.title}</h2>
-              </div>
-              <div className="resume-actions">
-                <a href={data.resume.header.cvLink} download className="btn-resume-primary">Download CV</a>
-                <a href={data.resume.header.viewLink} target="_blank" rel="noopener noreferrer" className="btn-resume-secondary">View Online</a>
+        <section id="experience" className="section resume-section">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">{data.resume.header.kicker}</p>
+              <h2>{data.resume.header.title}</h2>
+            </div>
+            <div className="resume-actions">
+              <a href={data.resume.header.cvLink} download className="download-cv">Download CV</a>
+              <a href={data.resume.header.viewLink} target="_blank" rel="noopener noreferrer" className="view-resume">View Online</a>
+            </div>
+          </div>
+
+          <div className="resume-grid">
+            <div className="resume-column">
+              <h3 className="column-title">Experience</h3>
+              <div className="timeline">
+                {data.resume.experience.map((exp) => (
+                  <div key={`${exp.role}-${exp.year}`} className="timeline-item">
+                    <span className="timeline-year">{exp.year}</span>
+                    <h4>{exp.role}</h4>
+                    <div className="timeline-org">{exp.company}</div>
+                    <p className="timeline-desc">{exp.description}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="resume-grid">
-              <div className="resume-column">
-                <h3 className="column-title">Experience</h3>
-                <div className="experience-list">
-                  {data.resume.experience.map((exp, index) => (
-                    <div key={index} className="experience-item">
-                      <span className="date">{exp.year}</span>
-                      <h4>{exp.role}</h4>
-                      <p className="company">{exp.company}</p>
-                      <p className="desc">{exp.description}</p>
+            <div className="resume-column">
+              <h3 className="column-title">Education</h3>
+              <div className="timeline">
+                {data.resume.education.map((edu) => (
+                  <div key={`${edu.degree}-${edu.year}`} className="timeline-item">
+                    <div className="timeline-header">
+                      <span className="timeline-year">{edu.year}</span>
+                      <span className="timeline-marks">{edu.marks}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="resume-column">
-                <h3 className="column-title">Education</h3>
-                <div className="education-list">
-                  {data.resume.education.map((edu, index) => (
-                    <div key={index} className="education-item">
-                      <div className="edu-header">
-                        <span className="date">{edu.year}</span>
-                        <span className="marks">{edu.marks}</span>
-                      </div>
-                      <h4>{edu.degree}</h4>
-                      <p className="institution">{edu.institution}</p>
-                    </div>
-                  ))}
-                </div>
+                    <h4>{edu.degree}</h4>
+                    <div className="timeline-org">{edu.institution}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Process Section */}
-        <section className="process">
-          <div className="section-header centered">
-            <span className="kicker">{data.processHeader.kicker}</span>
-            <h2 className="section-title">{data.processHeader.title}</h2>
+        <section className="section reveal-on-scroll visible">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">{data.processHeader.kicker}</p>
+              <h2>{data.processHeader.title}</h2>
+            </div>
           </div>
+
           <div className="process-grid">
             {data.process.map((step, index) => (
-              <div key={index} className="process-card">
-                <div className="process-number">0{index + 1}</div>
+              <div key={step.title} className="process-item">
+                <span>0{index + 1}</span>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
               </div>
@@ -313,64 +359,56 @@ function App() {
           </div>
         </section>
 
-        {/* Contact Section */}
-        <section id="contact" className="contact">
-          <div className="contact-container">
+        <section id="contact" className="section contact-section">
+          <div className="contact-grid">
             <div className="contact-info">
-              <span className="kicker">Let's Connect</span>
-              <h2 className="section-title">Have a project in mind?</h2>
-              <p className="contact-desc">Currently available for freelance work and new opportunities. Drop a message and let's build something great together.</p>
-              
+              <p className="section-kicker">Let's Connect</p>
+              <h2>Have a project in mind?</h2>
+              <p className="contact-description">
+                Currently available for freelance work and new opportunities. Drop a message and let's build something great together.
+              </p>
+
               <div className="contact-methods">
                 <a className="contact-method-item" href={`https://wa.me/${data.footer.whatsapp?.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
-                  <div className="method-icon">WP</div>
-                  <span>WhatsApp</span>
+                  <span className="method-label">WhatsApp</span>
+                  <span className="method-value">{data.footer.whatsapp}</span>
                 </a>
                 <a className="contact-method-item" href={`https://mail.google.com/mail/?view=cm&fs=1&to=${data.footer.email}`} target="_blank" rel="noopener noreferrer">
-                  <div className="method-icon">EM</div>
-                  <span>Email Me</span>
+                  <span className="method-label">Email</span>
+                  <span className="method-value">{data.footer.email}</span>
                 </a>
               </div>
             </div>
 
-            <div className="contact-form-wrapper">
-              <form className="contact-form" onSubmit={handleContactSubmit}>
-                <div className="form-group">
-                  <input type="text" name="name" placeholder="Your Name" required />
-                </div>
-                <div className="form-group">
-                  <input type="email" name="email" placeholder="Your Email" required />
-                </div>
-                <div className="form-group">
-                  <input type="text" name="subject" placeholder="Subject" required />
-                </div>
-                <div className="form-group">
-                  <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                </div>
-                <button type="submit" className="btn-submit">Send Message</button>
-              </form>
-            </div>
+            <form className="contact-form" onSubmit={handleContactSubmit}>
+              <div className="form-group">
+                <input type="text" name="name" placeholder="Your Name" required />
+              </div>
+              <div className="form-group">
+                <input type="email" name="email" placeholder="Your Email" required />
+              </div>
+              <div className="form-group">
+                <input type="text" name="subject" placeholder="Subject" required />
+              </div>
+              <div className="form-group">
+                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+              </div>
+              <button type="submit" className="button primary">Send Message</button>
+            </form>
           </div>
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-top">
-            <div className="footer-brand">
-              <h2 className="footer-logo">{data.general.logo}</h2>
-              <p>{data.footer.kicker}</p>
-            </div>
-            <div className="footer-social">
-              {data.footer.socials.map((social, index) => (
-                <a key={index} href={social.link} target="_blank" rel="noopener noreferrer">{social.label}</a>
-              ))}
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} {data.general.logo}. All rights reserved.</p>
-            <p>Built with React & Passion</p>
+        <div>
+          <p className="section-kicker">{data.footer.kicker}</p>
+          <h2>{data.footer.title}</h2>
+        </div>
+        <div className="footer-actions">
+          <div className="social-links">
+            {data.footer.socials.map((social) => (
+              <a key={social.label} href={social.link} target="_blank" rel="noopener noreferrer">{social.label}</a>
+            ))}
           </div>
         </div>
       </footer>
