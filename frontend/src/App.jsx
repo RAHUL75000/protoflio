@@ -373,7 +373,7 @@ function App() {
                   <span className="method-label">WhatsApp</span>
                   <span className="method-value">{data.footer.whatsapp}</span>
                 </a>
-                <a className="contact-method-item" href={`https://mail.google.com/mail/?view=cm&fs=1&to=${data.footer.email}`} target="_blank" rel="noopener noreferrer">
+                <a className="contact-method-item" href={`mailto:${data.footer.email}`}>
                   <span className="method-label">Email</span>
                   <span className="method-value">{data.footer.email}</span>
                 </a>
